@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenCode Python Runner - 使用文档</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .version {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        section h3 {
+            color: #555;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+        
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: #abb2bf;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+        
+        .keyword { color: #c678dd; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+        .function { color: #61afef; }
+        .number { color: #d19a66; }
+        
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .tip {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .method-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .method-list li {
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .method-list li strong {
+            color: #667eea;
+        }
+        
+        .example-block {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        
+        .example-block .title {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .toc h3 {
+            margin-top: 0;
+        }
+        
+        .toc ul {
+            margin-bottom: 0;
+        }
+        
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>OpenCode Python Runner</h1>
+            <p>通过 Python 代码驱动 opencode AI 编程助手</p>
+            <span class="version">版本 1.1.0</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="toc">
+            <h3>目录</h3>
+            <ul>
+                <li><a href="#简介">1. 简介</a></li>
+                <li><a href="#安装">2. 安装要求</a></li>
+                <li><a href="#快速开始">3. 快速开始</a></li>
+                <li><a href="#初始化">4. 初始化 OpenCodeRunner</a></li>
+                <li><a href="#基本用法">5. 基本用法</a></li>
+                <li><a href="#多轮对话">6. 多轮对话</a></li>
+                <li><a href="#监控与中断">7. 监控与中断</a></li>
+                <li><a href="#保存结果">8. 保存结果</a></li>
+                <li><a href="#获取信息">9. 获取信息</a></li>
+                <li><a href="#模型源配置">10. 模型源配置</a></li>
+                <li><a href="#命令行">11. 命令行用法</a></li>
+                <li><a href="#api">12. API 参考</a></li>
+                <li><a href="#示例">13. 完整示例</a></li>
+            </ul>
+        </div>
+        
+        <section id="简介">
+            <h2>1. 简介</h2>
+            <p>
+                <code>opencode_runner.py</code> 是一个 Python 封装库，用于通过 Python 代码驱动 
+                opencode AI 编程助手。它提供了丰富的功能，包括：
+            </p>
+            <ul>
+                <li>为每个任务创建独立的隔离工作目录</li>
+                <li>支持指定使用的 AI 模型</li>
+                <li>支持设置系统上下文/提示</li>
+                <li>支持多轮对话（通过会话 ID）</li>
+                <li>实时监控任务运行状态</li>
+                <li>支持中断和强制终止任务</li>
+                <li>自动保存对话为 Markdown 文件</li>
+                <li>获取完整的 JSON 事件流</li>
+            </ul>
+        </section>
+        
+        <section id="安装">
+            <h2>2. 安装要求</h2>
+            <p>在使用之前，请确保满足以下要求：</p>
+            <ul>
+                <li><strong>Python 3.7+</strong> - 需要支持类型提示和 asyncio</li>
+                <li><strong>opencode CLI</strong> - 必须已安装并配置好</li>
+            </ul>
+            <div class="tip">
+                <strong>提示：</strong> 确认 opencode 已安装，运行 <code>opencode --version</code> 检查。
+            </div>
+            <p>将 <code>opencode_runner.py</code> 复制到你的项目目录即可使用。</p>
+        </section>
+        
+        <section id="快速开始">
+            <h2>3. 快速开始</h2>
+            <p>下面是一个最基本的例子：</p>
+            <pre><code><span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner
+
+<span class="comment"># 创建运行器</span>
+runner = OpenCodeRunner(task_name=<span class="string">'hello'</span>)
+
+<span class="comment"># 执行任务</span>
+result = runner.run(<span class="string">'Say hello in Chinese'</span>)
+
+<span class="comment"># 打印结果</span>
+<span class="keyword">print</span>(result[<span class="string">'output'</span>])</code></pre>
+            <p>输出：</p>
+            <pre><code>你好 (nǐ hǎo)</code></pre>
+        </section>
+        
+        <section id="初始化">
+            <h2>4. 初始化 OpenCodeRunner</h2>
+            <p>创建 <code>OpenCodeRunner</code> 实例时，可以指定以下参数：</p>
+            <table>
+                <tr>
+                    <th>参数</th>
+                    <th>类型</th>
+                    <th>必需</th>
+                    <th>说明</th>
+                </tr>
+                <tr>
+                    <td><code>task_name</code></td>
+                    <td>str</td>
+                    <td>是</td>
+                    <td>任务名称，用于创建任务目录</td>
+                </tr>
+                <tr>
+                    <td><code>model</code></td>
+                    <td>str</td>
+                    <td>否</td>
+                    <td>使用的模型标识符</td>
+                </tr>
+                <tr>
+                    <td><code>context</code></td>
+                    <td>str</td>
+                    <td>否</td>
+                    <td>系统提示/上下文</td>
+                </tr>
+                <tr>
+                    <td><code>workspace</code></td>
+                    <td>str</td>
+                    <td>否</td>
+                    <td>工作空间根目录</td>
+                </tr>
+            </table>
+            
+            <h3>示例 1：基础初始化</h3>
+            <pre><code><span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner
+
+runner = OpenCodeRunner(task_name=<span class="string">'my_task'</span>)</code></pre>
+            
+            <h3>示例 2：指定模型</h3>
+            <pre><code><span class="comment"># 查看可用模型</span>
+<span class="comment"># opencode models</span>
+
+runner = OpenCodeRunner(
+    task_name=<span class="string">'my_task'</span>,
+    model=<span class="string">'opencode/claude-sonnet-4-5'</span>
+)</code></pre>
+            
+            <h3>示例 3：指定上下文和工作目录</h3>
+            <pre><code>runner = OpenCodeRunner(
+    task_name=<span class="string">'python_task'</span>,
+    context=<span class="string">'You are a Python expert. Answer in Chinese.'</span>,
+    workspace=<span class="string">'/path/to/workspace'</span>
+)</code></pre>
+            
+            <div class="note">
+                <strong>注意：</strong> 每次初始化都会创建一个新的任务目录，目录名格式为 
+                <code>task_{task_name}_{uuid}</code>，确保任务之间相互隔离。
+            </div>
+        </section>
+        
+        <section id="基本用法">
+            <h2>5. 基本用法</h2>
+            <p>使用 <code>run()</code> 方法执行 opencode 命令：</p>
+            
+            <h3>示例 1：阻塞模式（默认）</h3>
+            <pre><code><span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner
+
+runner = OpenCodeRunner(task_name=<span class="string">'test'</span>)
+result = runner.run(<span class="string">'What is 2+2?'</span>)
+
+<span class="keyword">print</span>(result[<span class="string">'output'</span>])       <span class="comment"># '4'</span>
+<span class="keyword">print</span>(result[<span class="string">'session_id'</span>])  <span class="comment"># 'ses_xxx...'</span>
+<span class="keyword">print</span>(result[<span class="string">'task_dir'</span>])   <span class="comment"># '/path/to/task_test_xxx'</span></code></pre>
+            
+            <h3>示例 2：指定本次请求的上下文</h3>
+            <pre><code>runner = OpenCodeRunner(task_name=<span class="string">'test'</span>)
+
+<span class="comment"># 此次请求使用特定上下文</span>
+result = runner.run(
+    message=<span class="string">'Explain list comprehension'</span>,
+    context=<span class="string">'Answer in Chinese'</span>
+)</code></pre>
+            
+            <h3>示例 3：获取完整 JSON 事件</h3>
+            <pre><code>runner = OpenCodeRunner(task_name=<span class="string">'test'</span>)
+result = runner.run(<span class="string">'Hello'</span>)
+
+<span class="comment"># JSON 事件包含详细信息</span>
+<span class="keyword">for</span> event <span class="keyword">in</span> result[<span class="string">'json_events'</span>]:
+    <span class="keyword">print</span>(event.get(<span class="string">'type'</span>), event.get(<span class="string">'sessionID'</span>))</code></pre>
+        </section>
+        
+        <section id="多轮对话">
+            <h2>6. 多轮对话</h2>
+            <p>
+                <code>OpenCodeRunner</code> 会自动维护会话 ID，支持多轮对话。
+                每次调用 <code>run()</code> 都会自动使用之前的会话。
+            </p>
+            
+            <h3>示例：连续对话</h3>
+            <pre><code><span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner
+
+runner = OpenCodeRunner(task_name=<span class="string">'conversation'</span>)
+
+<span class="comment"># 第一轮</span>
+result1 = runner.run(<span class="string">'What is 2+2?'</span>)
+<span class="keyword">print</span>(result1[<span class="string">'output'</span>])  <span class="comment"># '4'</span>
+
+<span class="comment"># 第二轮 - 自动使用同一会话</span>
+result2 = runner.run(<span class="string">'Now multiply that by 3'</span>)
+<span class="keyword">print</span>(result2[<span class="string">'output'</span>])  <span class="comment"># '12'</span>
+
+<span class="comment"># 第三轮</span>
+result3 = runner.run(<span class="string">'What was my first question?'</span>)
+<span class="keyword">print</span>(result3[<span class="string">'output'</span>])  <span class="comment"># 模型记得之前的对话</span>
+
+<span class="comment"># 查看会话 ID</span>
+<span class="keyword">print</span>(runner.get_session_id())  <span class="comment"># 'ses_xxx...'</span></code></pre>
+            
+            <div class="tip">
+                <strong>提示：</strong> 多轮对话通过 <code>--session</code> 参数实现，
+                会话 ID 由 opencode 自动生成并维护。
+            </div>
+        </section>
+        
+        <section id="监控与中断">
+            <h2>7. 监控与中断</h2>
+            <p>
+                <code>run(wait=False)</code> 可以异步启动任务，然后通过各种方法
+                实时监控状态和输出，并支持中断执行。
+            </p>
+            
+            <h3>示例 1：异步启动并监控</h3>
+            <pre><code><span class="keyword">import</span> time
+<span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner
+
+runner = OpenCodeRunner(task_name=<span class="string">'monitor'</span>)
+
+<span class="comment"># 异步启动，不等待完成</span>
+result = runner.run(<span class="string">'Write a long story'</span>, wait=<span class="keyword">False</span>)
+
+<span class="keyword">print</span>(f<span class="string">"State: {result['state']}"</span>)  <span class="comment"># 'running'</span>
+
+<span class="comment"># 循环监控</span>
+<span class="keyword">while</span> runner.is_running():
+    time.sleep(<span class="number">1</span>)
+    state = runner.get_state()
+    output = runner.get_current_output()
+    <span class="keyword">print</span>(f<span class="string">"State: {state.value}, Output length: {len(output)}"</span>)
+
+<span class="comment"># 等待完成</span>
+final_result = runner.wait()
+<span class="keyword">print</span>(final_result[<span class="string">'output'</span>])</code></pre>
+            
+            <h3>示例 2：获取实时输出片段</h3>
+            <pre><code>runner = OpenCodeRunner(task_name=<span class="string">'monitor'</span>)
+runner.run(<span class="string">'Generate code'</span>, wait=<span class="keyword">False</span>)
+
+<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):
+    time.sleep(<span class="number">1</span>)
+    <span class="keyword">if</span> runner.get_current_output():
+        <span class="keyword">print</span>(f<span class="string">"Progress at {i}s: {runner.get_current_output()[:100]}..."</span>)</code></pre>
+            
+            <h3>示例 3：中断任务</h3>
+            <pre><code>runner = OpenCodeRunner(task_name=<span class="string">'interrupt_test'</span>)
+runner.run(<span class="string">'List all files recursively'</span>, wait=<span class="keyword">False</span>)
+
+<span class="comment"># 运行一段时间后中断</span>
+time.sleep(<span class="number">3</span>)
+
+<span class="keyword">if</span> runner.interrupt():
+    <span class="keyword">print</span>(<span class="string">"已发送中断信号"</span>)
+<span class="keyword">else</span>:
+    <span class="keyword">print</span>(<span class="string">"任务已完成，无法中断"</span>)
+
+<span class="comment"># 查看最终状态</span>
+<span class="keyword">print</span>(runner.get_state())  <span class="comment"># RunState.INTERRUPTED</span></code></pre>
+            
+            <h3>示例 4：强制终止</h3>
+            <pre><code><span class="comment"># 如果优雅中断无效，可以强制终止</span>
+runner = OpenCodeRunner(task_name=<span class="string">'force_kill'</span>)
+runner.run(<span class="string">'任务'</span>, wait=<span class="keyword">False</span>)
+
+time.sleep(<span class="number">2</span>)
+
+<span class="comment"># 尝试优雅中断</span>
+<span class="keyword">if not</span> runner.interrupt():
+    <span class="comment"># 如果不行，强制终止</span>
+    runner.kill()</code></pre>
+            
+            <div class="warning">
+                <strong>警告：</strong> <code>kill()</code> 会强制终止进程，不会进行资源清理。
+                请仅在 <code>interrupt()</code> 无效时使用。
+            </div>
+            
+            <h3>示例 5：获取最近的 JSON 事件</h3>
+            <pre><code>runner = OpenCodeRunner(task_name=<span class="string">'events'</span>)
+runner.run(<span class="string">'任务'</span>, wait=<span class="keyword">False</span>)
+
+time.sleep(<span class="number">2</span>)
+
+<span class="comment"># 获取最近 5 个事件</span>
+events = runner.get_recent_events(<span class="number">5</span>)
+<span class="keyword">for</span> e <span class="keyword">in</span> events:
+    <span class="keyword">print</span>(e.get(<span class="string">'type'</span>))</code></pre>
+        </section>
+        
+        <section id="保存结果">
+            <h2>8. 保存结果</h2>
+            <p>支持将对话历史保存为 Markdown 文件：</p>
+            
+            <h3>示例 1：保存到默认位置</h3>
+            <pre><code>runner = OpenCodeRunner(task_name=<span class="string">'save_test'</span>)
+runner.run(<span class="string">'问题1'</span>)
+runner.run(<span class="string">'问题2'</span>)
+
+<span class="comment"># 保存到任务目录的 conversation.md</span>
+filepath = runner.save_markdown()
+<span class="keyword">print</span>(f<span class="string">"已保存到: {filepath}"</span>)</code></pre>
+            
+            <h3>示例 2：保存到自定义路径</h3>
+            <pre><code><span class="comment"># 保存到指定路径</span>
+filepath = runner.save_markdown(<span class="string">'/path/to/output.md'</span>)</code></pre>
+            
+            <h3>示例 3：获取 Markdown 字符串</h3>
+            <pre><code><span class="comment"># 获取而不保存文件</span>
+markdown_text = runner.get_conversation_markdown()
+<span class="keyword">print</span>(markdown_text)</code></pre>
+            
+            <p>生成的 Markdown 文件格式如下：</p>
+            <pre><code># save_test
+
+**Model**: default
+
+**Date**: 2026-02-26 12:00:00
+
+**Task Dir**: /path/to/task_save_test_xxx
+
+**Session ID**: ses_xxx...
+
+---
+
+## User
+
+问题1
+
+## Assistant
+
+回答1
+
+## User
+
+问题2
+
+## Assistant
+
+回答2</code></pre>
+        </section>
+        
+        <section id="获取信息">
+            <h2>9. 获取信息</h2>
+            <p>提供多种方法获取运行器和任务信息：</p>
+            
+            <h3>示例代码</h3>
+            <pre><code><span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner
+
+runner = OpenCodeRunner(
+    task_name=<span class="string">'info_test'</span>,
+    model=<span class="string">'opencode/claude-sonnet-4-5'</span>
+)
+
+runner.run(<span class="string">'Hello'</span>)
+
+<span class="comment"># 获取各种信息</span>
+<span class="keyword">print</span>(runner.get_state())              <span class="comment"># RunState.COMPLETED</span>
+<span class="keyword">print</span>(runner.get_session_id())          <span class="comment"># 'ses_xxx...'</span>
+<span class="keyword">print</span>(runner.task_dir)                   <span class="comment"># '/path/to/...'</span>
+<span class="keyword">print</span>(runner.model)                      <span class="comment"># 'opencode/claude-sonnet-4-5'</span>
+
+<span class="comment"># 获取对话历史</span>
+history = runner.get_conversation_history()
+<span class="keyword">for</span> msg <span class="keyword">in</span> history:
+    <span class="keyword">print</span>(f<span class="string">"{msg['role']}: {msg['content']}"</span>)
+
+<span class="comment"># 获取所有 JSON 事件</span>
+events = runner.get_json_events()
+<span class="keyword">print</span>(f<span class="string">"共 {len(events)} 个事件"</span>)</code></pre>
+        </section>
+        
+        <section id="模型源配置">
+            <h2>10. 模型源配置</h2>
+            <p>
+                支持为不同场景配置不同的模型源，包括：
+            </p>
+            <ul>
+                <li><code>PLAN</code> - 执行 plan 任务</li>
+                <li><code>THINK</code> - 执行思考任务</li>
+                <li><code>CODE</code> - 执行编码任务</li>
+                <li><code>WRITE</code> - 执行写作任务</li>
+                <li><code>DEFAULT</code> - 执行普通任务</li>
+            </ul>
+            
+            <h3>10.1 ModelConfig 类</h3>
+            <p>每个模型配置包含以下参数：</p>
+            <table>
+                <tr>
+                    <th>参数</th>
+                    <th>类型</th>
+                    <th>说明</th>
+                </tr>
+                <tr>
+                    <td><code>baseurl</code></td>
+                    <td>str</td>
+                    <td>API 基础 URL</td>
+                </tr>
+                <tr>
+                    <td><code>apikey</code></td>
+                    <td>str</td>
+                    <td>API 密钥</td>
+                </tr>
+                <tr>
+                    <td><code>model</code></td>
+                    <td>str</td>
+                    <td>模型名称</td>
+                </tr>
+                <tr>
+                    <td><code>temperature</code></td>
+                    <td>float</td>
+                    <td>温度参数 (0-2)</td>
+                </tr>
+                <tr>
+                    <td><code>max_tokens</code></td>
+                    <td>int</td>
+                    <td>最大 token 数</td>
+                </tr>
+            </table>
+            
+            <h3>10.2 代码中配置模型源</h3>
+            <pre><code><span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner, ModelSource, ModelSourceType
+
+<span class="comment"># 创建模型源配置</span>
+model_source = ModelSource()
+model_source.set_model(
+    ModelSourceType.CODE,
+    baseurl=<span class="string">"https://api.openai.com"</span>,
+    apikey=<span class="string">"sk-xxx"</span>,
+    model=<span class="string">"gpt-4"</span>,
+    temperature=<span class="number">0.3</span>,
+    max_tokens=<span class="number">4096</span>
+)
+model_source.set_model(
+    ModelSourceType.WRITE,
+    baseurl=<span class="string">"https://api.openai.com"</span>,
+    apikey=<span class="string">"sk-xxx"</span>,
+    model=<span class="string">"gpt-3.5-turbo"</span>,
+    temperature=<span class="number">0.8</span>
+)
+
+<span class="comment"># 创建运行器并指定模型源</span>
+runner = OpenCodeRunner(
+    task_name=<span class="string">'test'</span>,
+    model_source=model_source
+)
+
+<span class="comment"># 执行任务时指定使用哪个场景的模型</span>
+result = runner.run(<span class="string">"写一段代码"</span>, model_source_type=ModelSourceType.CODE)</code></pre>
+            
+            <h3>10.3 从字典加载配置</h3>
+            <pre><code><span class="keyword">from</span> opencode_runner <span class="keyword">import</span> ModelSource
+
+config = {
+    <span class="string">"code"</span>: {
+        <span class="string">"baseurl"</span>: <span class="string">"https://api.openai.com"</span>,
+        <span class="string">"apikey"</span>: <span class="string">"sk-xxx"</span>,
+        <span class="string">"model"</span>: <span class="string">"gpt-4"</span>,
+        <span class="string">"temperature"</span>: <span class="number">0.3</span>,
+        <span class="string">"max_tokens"</span>: <span class="number">4096</span>
+    },
+    <span class="string">"write"</span>: {
+        <span class="string">"baseurl"</span>: <span class="string">"https://api.openai.com"</span>,
+        <span class="string">"apikey"</span>: <span class="string">"sk-xxx"</span>,
+        <span class="string">"model"</span>: <span class="string">"gpt-3.5-turbo"</span>,
+        <span class="string">"temperature"</span>: <span class="number">0.8</span>
+    }
+}
+model_source = ModelSource.from_dict(config)</code></pre>
+            
+            <h3>10.4 从 .env 文件加载配置</h3>
+            <p>默认自动加载当前目录的 <code>.env</code> 文件，也可以指定其他文件。</p>
+            
+            <h4>.env 文件格式：</h4>
+            <pre><code><span class="comment"># PLAN 任务模型</span>
+MODEL_PLAN_BASEURL=https://api.openai.com
+MODEL_PLAN_APIKEY=sk-plan-key
+MODEL_PLAN_MODEL=gpt-4
+MODEL_PLAN_TEMPERATURE=0.7
+MODEL_PLAN_MAX_TOKENS=4096
+
+<span class="comment"># THINK 思考任务模型</span>
+MODEL_THINK_BASEURL=https://api.anthropic.com
+MODEL_THINK_APIKEY=sk-ant-think
+MODEL_THINK_MODEL=claude-3-opus
+MODEL_THINK_TEMPERATURE=0.9
+
+<span class="comment"># CODE 编码任务模型</span>
+MODEL_CODE_BASEURL=https://api.openai.com
+MODEL_CODE_APIKEY=sk-code-key
+MODEL_CODE_MODEL=gpt-4
+MODEL_CODE_TEMPERATURE=0.3
+
+<span class="comment"># WRITE 写作任务模型</span>
+MODEL_WRITE_BASEURL=https://api.openai.com
+MODEL_WRITE_APIKEY=sk-write-key
+MODEL_WRITE_MODEL=gpt-3.5-turbo
+MODEL_WRITE_TEMPERATURE=0.8
+
+<span class="comment"># DEFAULT 普通任务模型</span>
+MODEL_DEFAULT_BASEURL=https://api.openai.com
+MODEL_DEFAULT_APIKEY=sk-default-key
+MODEL_DEFAULT_MODEL=gpt-3.5-turbo</code></pre>
+            
+            <h4>加载 .env 文件：</h4>
+            <pre><code><span class="keyword">from</span> opencode_runner <span class="keyword">import</span> ModelSource
+
+<span class="comment"># 默认加载当前目录的 .env</span>
+model_source = ModelSource.from_env_file()
+
+<span class="comment"># 或指定文件路径</span>
+model_source = ModelSource.from_env_file(<span class="string">'prod.env'</span>)</code></pre>
+            
+            <h3>10.5 运行时指定模型</h3>
+            <p>执行任务时，可以临时指定使用的模型：</p>
+            <pre><code><span class="comment"># 方式1：直接指定模型（优先级最高）</span>
+result = runner.run(<span class="string">"任务"</span>, model=<span class="string">"opencode/claude-sonnet-4-5"</span>)
+
+<span class="comment"># 方式2：指定使用哪个场景的模型源</span>
+result = runner.run(<span class="string">"写代码"</span>, model_source_type=ModelSourceType.CODE)</code></pre>
+            
+            <div class="tip">
+                <strong>提示：</strong> 模型参数优先级：直接指定 model > model_source_type > 默认 model > 默认配置
+            </div>
+        </section>
+        
+        <section id="命令行">
+            <h2>11. 命令行用法</h2>
+            <p>也可以直接在命令行中使用：</p>
+            
+            <h3>基本用法</h3>
+            <pre><code>python opencode_runner.py --task-name test --message "say hello"</code></pre>
+            
+            <h3>指定模型</h3>
+            <pre><code>python opencode_runner.py --task-name test --model opencode/claude-sonnet-4-5 --message "help"</code></pre>
+            
+            <h3>添加上下文</h3>
+            <pre><code>python opencode_runner.py --task-name test --context "You are a Python expert" --message "what is list?"</code></pre>
+            
+            <h3>实时监控模式</h3>
+            <pre><code>python opencode_runner.py --task-name test --message "generate code" --no-wait</code></pre>
+            <p>使用 <code>--no-wait</code> 会实时显示输出，按 <code>Ctrl+C</code> 可中断。</p>
+            
+            <h3>保存 Markdown</h3>
+            <pre><code>python opencode_runner.py --task-name test --message "hello" --save-markdown</code></pre>
+            
+            <h3>完整选项</h3>
+            <table>
+                <tr>
+                    <th>选项</th>
+                    <th>说明</th>
+                </tr>
+                <tr>
+                    <td><code>--task-name</code></td>
+                    <td>任务名称（必需）</td>
+                </tr>
+                <tr>
+                    <td><code>--model</code></td>
+                    <td>使用的模型</td>
+                </tr>
+                <tr>
+                    <td><code>--context</code></td>
+                    <td>系统上下文/提示</td>
+                </tr>
+                <tr>
+                    <td><code>--workspace</code></td>
+                    <td>工作空间目录</td>
+                </tr>
+                <tr>
+                    <td><code>--message</code></td>
+                    <td>发送的消息（必需）</td>
+                </tr>
+                <tr>
+                    <td><code>--save-markdown</code></td>
+                    <td>保存对话到 Markdown</td>
+                </tr>
+                <tr>
+                    <td><code>--no-wait</code></td>
+                    <td>不等待完成，实时监控</td>
+                </tr>
+                <tr>
+                    <td><code>--model-source-type</code></td>
+                    <td>指定使用哪个场景的模型 (plan/think/code/write/default)</td>
+                </tr>
+                <tr>
+                    <td><code>--config</code></td>
+                    <td>模型源配置文件路径 (.env 格式)</td>
+                </tr>
+                <tr>
+                    <td><code>--no-env</code></td>
+                    <td>不加载默认的 .env 配置文件</td>
+                </tr>
+            </table>
+            
+            <h3>命令行示例</h3>
+            <pre><code><span class="comment"># 默认加载当前目录的 .env 文件</span>
+python opencode_runner.py --task-name test --message "say hello"
+
+<span class="comment"># 指定配置文件</span>
+python opencode_runner.py --task-name test --message "say hello" --config prod.env
+
+<span class="comment"># 不加载 .env</span>
+python opencode_runner.py --task-name test --message "say hello" --no-env
+
+<span class="comment"># 使用 code 模型源</span>
+python opencode_runner.py --task-name test --message "写代码" --model-source-type code</code></pre>
+        </section>
+        
+        <section id="api">
+            <h2>12. API 参考</h2>
+            
+            <h3>类：ModelConfig</h3>
+            <p>模型配置类，包含 baseurl, apikey, model, temperature, max_tokens</p>
+            <ul class="method-list">
+                <li>
+                    <strong>__init__(baseurl="", apikey="", model="", temperature=None, max_tokens=None)</strong>
+                    <br>初始化模型配置
+                </li>
+                <li>
+                    <strong>to_dict()</strong>
+                    <br>转换为字典
+                </li>
+                <li>
+                    <strong>from_dict(data)</strong>
+                    <br>从字典创建（类方法）
+                </li>
+            </ul>
+            
+            <h3>类：ModelSource</h3>
+            <p>模型源配置类</p>
+            <ul class="method-list">
+                <li>
+                    <strong>__init__(sources=None)</strong>
+                    <br>初始化模型源
+                </li>
+                <li>
+                    <strong>set_model(source_type, baseurl, apikey, model, temperature=None, max_tokens=None)</strong>
+                    <br>设置指定场景的模型配置
+                </li>
+                <li>
+                    <strong>get_model(source_type)</strong>
+                    <br>获取指定场景的模型配置
+                </li>
+                <li>
+                    <strong>has_model(source_type)</strong>
+                    <br>检查是否配置了指定场景的模型
+                </li>
+                <li>
+                    <strong>from_dict(data)</strong>
+                    <br>从字典创建（类方法）
+                </li>
+                <li>
+                    <strong>from_env_file(filepath=".env")</strong>
+                    <br>从 .env 文件加载（类方法）
+                </li>
+                <li>
+                    <strong>to_dict()</strong>
+                    <br>转换为字典
+                </li>
+            </ul>
+            
+            <h3>枚举：ModelSourceType</h3>
+            <ul>
+                <li><code>ModelSourceType.PLAN</code> - 执行 plan 任务</li>
+                <li><code>ModelSourceType.THINK</code> - 执行思考任务</li>
+                <li><code>ModelSourceType.CODE</code> - 执行编码任务</li>
+                <li><code>ModelSourceType.WRITE</code> - 执行写作任务</li>
+                <li><code>ModelSourceType.DEFAULT</code> - 执行普通任务</li>
+            </ul>
+            
+            <h3>类：OpenCodeRunner</h3>
+            <ul class="method-list">
+                <li>
+                    <strong>__init__(task_name, model=None, context=None, workspace=None, model_source=None)</strong>
+                    <br>初始化运行器
+                </li>
+                <li>
+                    <strong>run(message, context=None, wait=True, model=None, model_source_type=None)</strong>
+                    <br>执行 opencode 命令
+                </li>
+                <li>
+                    <strong>wait(timeout=None)</strong>
+                    <br>等待任务完成
+                </li>
+                <li>
+                    <strong>get_state()</strong>
+                    <br>获取当前状态
+                </li>
+                <li>
+                    <strong>get_session_id()</strong>
+                    <br>获取会话 ID
+                </li>
+                <li>
+                    <strong>get_current_output()</strong>
+                    <br>获取当前输出
+                </li>
+                <li>
+                    <strong>get_recent_events(count=10)</strong>
+                    <br>获取最近事件
+                </li>
+                <li>
+                    <strong>is_running()</strong>
+                    <br>检查是否在运行
+                </li>
+                <li>
+                    <strong>interrupt()</strong>
+                    <br>发送中断信号
+                </li>
+                <li>
+                    <strong>kill()</strong>
+                    <br>强制终止
+                </li>
+                <li>
+                    <strong>save_markdown(filepath=None)</strong>
+                    <br>保存为 Markdown
+                </li>
+                <li>
+                    <strong>get_conversation_markdown()</strong>
+                    <br>获取 Markdown 字符串
+                </li>
+                <li>
+                    <strong>get_json_events()</strong>
+                    <br>获取所有 JSON 事件
+                </li>
+                <li>
+                    <strong>get_conversation_history()</strong>
+                    <br>获取对话历史
+                </li>
+            </ul>
+            
+            <h3>枚举：RunState</h3>
+            <ul>
+                <li><code>RunState.IDLE</code> - 初始状态</li>
+                <li><code>RunState.RUNNING</code> - 运行中</li>
+                <li><code>RunState.COMPLETED</code> - 已完成</li>
+                <li><code>RunState.INTERRUPTED</code> - 已中断</li>
+                <li><code>RunState.ERROR</code> - 出错</li>
+            </ul>
+        </section>
+        
+        <section id="示例">
+            <h2>13. 完整示例</h2>
+            
+            <h3>示例 1：代码审查助手</h3>
+            <pre><code><span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner
+
+<span class="comment"># 创建代码审查助手</span>
+runner = OpenCodeRunner(
+    task_name=<span class="string">'code_review'</span>,
+    context=<span class="string">"""You are a code reviewer. 
+Review the code for:
+1. Bugs and potential issues
+2. Security vulnerabilities  
+3. Performance problems
+4. Code style issues
+
+Provide constructive feedback in Chinese."""</span>
+)
+
+<span class="comment"># 提交代码供审查</span>
+code = <span class="string">"""
+def process_data(data):
+    for item in data:
+        save_to_db(item)
+    return True
+"""</span>
+
+result = runner.run(<span class="string">f"Review this code:\n{code}"</span>)
+<span class="keyword">print</span>(result[<span class="string">'output'</span>])
+
+<span class="comment"># 继续提问</span>
+result2 = runner.run(<span class="string">"How can I improve it?"</span>)
+<span class="keyword">print</span>(result2[<span class="string">'output'</span>])
+
+<span class="comment"># 保存记录</span>
+runner.save_markdown(<span class="string">'/path/to/review.md'</span>)</code></pre>
+            
+            <h3>示例 2：实时进度监控</h3>
+            <pre><code><span class="keyword">import</span> time
+<span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner, RunState
+
+runner = OpenCodeRunner(task_name=<span class="string">'progress_monitor'</span>)
+
+<span class="comment"># 启动一个较长的任务</span>
+runner.run(<span class="string">"Write a comprehensive Python tutorial about decorators"</span>, wait=<span class="keyword">False</span>)
+
+<span class="keyword">print</span>(<span class="string">"开始监控..."</span>)
+
+<span class="comment"># 实时显示进度</span>
+last_len = <span class="number">0</span>
+<span class="keyword">while</span> runner.is_running():
+    time.sleep(<span class="number">0.5</span>)
+    output = runner.get_current_output()
+    
+    <span class="keyword">if</span> len(output) > last_len:
+        new_text = output[last_len:]
+        <span class="keyword">print</span>(new_text, end=<span class="string">''</span>, flush=<span class="keyword">True</span>)
+        last_len = len(output)
+
+<span class="comment"># 任务完成</span>
+<span class="keyword">print</span>(f<span class="string">"\n\n最终状态: {runner.get_state()}"</span>)</code></pre>
+            
+            <h3>示例 3：带超时的任务执行</h3>
+            <pre><code><span class="keyword">import</span> time
+<span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner
+
+runner = OpenCodeRunner(task_name=<span class="string">'timeout_test'</span>)
+
+<span class="comment"># 启动任务</span>
+result = runner.run(<span class="string">"Complex calculation"</span>, wait=<span class="keyword">False</span>)
+
+<span class="comment"># 等待最多 30 秒</span>
+result = runner.wait(timeout=<span class="number">30</span>)
+
+<span class="keyword">if</span> runner.get_state() == RunState.RUNNING:
+    <span class="keyword">print</span>(<span class="string">"任务超时，准备中断..."</span>)
+    runner.interrupt()
+    result = runner.wait()
+    <span class="keyword">print</span>(<span class="string">"中断后的输出:"</span>, result[<span class="string">'output'</span>])
+<span class="keyword">else</span>:
+    <span class="keyword">print</span>(<span class="string">"任务完成:"</span>, result[<span class="string">'output'</span>[:<span class="number">100</span>])</code></pre>
+            
+            <h3>示例 4：批量任务处理</h3>
+            <pre><code><span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner
+
+<span class="comment"># 批量处理多个请求</span>
+questions = [
+    <span class="string">"What is Python?"</span>,
+    <span class="string">"What is list comprehension?"</span>,
+    <span class="string">"What is decorators?"</span>
+]
+
+<span class="comment"># 每个问题创建独立任务</span>
+<span class="keyword">for</span> i, q <span class="keyword">in</span> enumerate(questions):
+    runner = OpenCodeRunner(task_name=<span class="string">f'q{i+1}'</span>)
+    result = runner.run(q)
+    
+    <span class="comment"># 保存每个问题的答案</span>
+    runner.save_markdown(<span class="string">f'/path/to/answer_{i+1}.md'</span>)
+    <span class="keyword">print</span>(f<span class="string">"Q{i+1} 完成"</span>)
+
+<span class="h3">示例 5：使用模型源配置</span>
+<pre><code><span class="keyword">from</span> opencode_runner <span class="keyword">import</span> OpenCodeRunner, ModelSource, ModelSourceType
+
+<span class="comment"># 创建模型源配置</span>
+model_source = ModelSource()
+model_source.set_model(
+    ModelSourceType.CODE,
+    baseurl=<span class="string">"https://api.openai.com"</span>,
+    apikey=<span class="string">"sk-code"</span>,
+    model=<span class="string">"gpt-4"</span>,
+    temperature=<span class="number">0.3</span>
+)
+model_source.set_model(
+    ModelSourceType.WRITE,
+    baseurl=<span class="string">"https://api.openai.com"</span>,
+    apikey=<span class="string">"sk-write"</span>,
+    model=<span class="string">"gpt-3.5-turbo"</span>,
+    temperature=<span class="number">0.8</span>
+)
+
+<span class="comment"># 创建运行器</span>
+runner = OpenCodeRunner(
+    task_name=<span class="string">'multi_task'</span>,
+    model_source=model_source
+)
+
+<span class="comment"># 执行编码任务 - 使用 CODE 模型源</span>
+result1 = runner.run(<span class="string">"Write a Python function to calculate fibonacci"</span>, 
+                     model_source_type=ModelSourceType.CODE)
+<span class="keyword">print</span>(<span class="string">"Code task result:"</span>, result1[<span class="string">'output'</span>])
+
+<span class="comment"># 执行写作任务 - 使用 WRITE 模型源</span>
+result2 = runner.run(<span class="string">"Write a short poem about coding"</span>,
+                     model_source_type=ModelSourceType.WRITE)
+<span class="keyword">print</span>(<span class="string">"Write task result:"</span>, result2[<span class="string">'output'</span>)
+
+<span class="comment"># 从 .env 文件加载配置</span>
+model_source2 = ModelSource.from_env_file(<span class="string">'.env'</span>)
+runner2 = OpenCodeRunner(task_name=<span class="string">'env_task'</span>, model_source=model_source2)
+
+<span class="comment"># 执行任务时动态选择模型源</span>
+result3 = runner2.run(<span class="string">"分析这段代码"</span>, model_source_type=ModelSourceType.CODE)</code></pre>
+        </section>
+        
+        <footer>
+            <p>OpenCode Python Runner &copy; 2026</p>
+            <p>使用文档 | API 参考</p>
+        </footer>
+    </div>
+</body>
+</html>
